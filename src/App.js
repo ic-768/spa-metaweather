@@ -1,22 +1,26 @@
-import logo from './logo.svg';
+import React,{useState,useEffect} from "react"
+import {getWeather} from "./api_calls"
 import './App.css';
 
 function App() {
+	
+	const [filterQuery,setFilterQuery]=useState("")
+
+	useEffect(()=>{
+		(async()=>{ //
+			filterQuery && console.log(await getWeather(`/api/location/search/?query=${filterQuery}`)) //full address is proxied in package.json
+		})()
+
+	},[filterQuery])
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+				Test data
+				<input placeholder="Search by location" onChange={(e)=>{setFilterQuery(e.target.value)}}/>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );
