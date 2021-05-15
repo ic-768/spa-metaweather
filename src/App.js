@@ -34,8 +34,13 @@ function App() {
 					<div className="Banner">
 						<div className="searchBar">
 							<img className="searchImage" src="Media/search.svg" alt="" />
-							<input className="searchBar__input" type="text" value={filterQuery} placeholder="Search for a location..."
-								onChange={(e) => {setFilterQuery(e.target.value)}} /> {/*filter locations (trigger useEffect)*/}
+							<input 
+								className="searchBar__input" 
+								type="text" 
+								value={filterQuery} 
+								placeholder="Search for a location..."
+								onChange={(e) => {setFilterQuery(e.target.value)}} /*filter locations (trigger useEffect)*/
+							/> 
 						</div>
 					</div>
 
@@ -44,8 +49,12 @@ function App() {
 				</Route>
 
 				<Route path="/:id"> {/*a location has been selected*/}
-					<WeatherView setFilterQuery={setFilterQuery} setLocations={setLocations} 
-						setIsLoading={setIsLoading} setNotification={setNotification} />
+					<WeatherView 
+						setFilterQuery={setFilterQuery} 
+						setLocations={setLocations} 
+						setIsLoading={setIsLoading} 
+						setNotification={setNotification} 
+					/>
 				</Route>
 
 			</div>
