@@ -1,11 +1,21 @@
 import axios from "axios"
 
 export const getLocations = async (query) => {
-	const response = await axios.get(`/api/location/search/?query=${query}`)
-	return response.data
+	try {
+		const response = await axios.get(`/api/location/search/?query=${query}`)
+		return response.data
+	}
+	catch{
+		throw ("Something went wrong while fetching locations")
+	}
 }
 
 export const getWeather = async (id) => {
-	const response = await axios.get(`/api/location/${id}/`)  //! taking away that trailing slash causes a CORS
-	return response.data.consolidated_weather
+	try {
+		const response = await axios.get(`/api/location/${id}/`)  //! taking away that trailing slash causes a CORS
+		return response.data.consolidated_weather
+	}
+	catch{
+		throw ("Something went wrong while fetching weather")
+	}
 }
