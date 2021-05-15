@@ -10,6 +10,9 @@ const WeatherView = ({setFilterQuery, setLocations,setIsLoading, setNotification
 	const [weather, setWeather] = useState(null)
 	const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
+
+	useEffect(() => { //on first render only, get weather info
+
 	const updateWeather = async () => {
 		try { //set spinning animation, make api call, stop animation
 			setIsLoading(true)
@@ -25,16 +28,16 @@ const WeatherView = ({setFilterQuery, setLocations,setIsLoading, setNotification
 			}, 3000)
 		}
 	}
-
-	useEffect(() => { //on render, get weather info
 		updateWeather()
-	}, [])
+
+	 }, [] // eslint-disable-line react-hooks/exhaustive-deps
+	)
 
 	return (
 		<div className="WeatherView">
 			<div className="weather__header">
 				<Link to="/" onClick={()=>{setFilterQuery("");setLocations([])}} style={{marginRight:"20px"}}> {/*go to main page and reset state*/}
-					<img src="Media/left-arrow.svg" alt="back" className="clickableIcon"/>
+					<img src="Media/left-arrow.svg" alt="go back" className="clickableIcon"/>
 				</Link>
 				<h1>{(weather && weather.title)}</h1>
 			</div>
@@ -46,7 +49,7 @@ const WeatherView = ({setFilterQuery, setLocations,setIsLoading, setNotification
 
 					return (
 						<div className="dayCard" key={i}> {/*card for each day*/}
-							<div className="card__attribute">
+							<div >
 								<h3 style={{borderBottom:"1px solid gray"}}>{nameOfDay}</h3>
 							</div>
 							<div className="imageContainer">

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import { Route} from "react-router-dom"
+import {Route} from "react-router-dom"
 import {PropagateLoader} from "react-spinners"
 import {getLocations} from "./api_calls"
 import WeatherView from "./WeatherView"
