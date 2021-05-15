@@ -3,22 +3,22 @@ import {useParams, useHistory,Link} from "react-router-dom"
 import {getWeather} from "./api_calls"
 
 const WeatherView = ({setFilterQuery, setLocations,setIsLoading, setNotification}) => {
-	/*Shown when a page is selected */
+	/*rendered when a page is selected */
 
-	const {id} = useParams() // page id will be url param 
+	const {id} = useParams() // page id is url param 
 	const history = useHistory()
 	const [weather, setWeather] = useState(null)
 	const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 	const updateWeather = async () => {
-		try { //set spinning animation, set weather, stop animation
+		try { //set spinning animation, make api call, stop animation
 			setIsLoading(true)
 			setWeather(await getWeather(id))
 			setIsLoading(false)
 		}
 		catch{
 			setIsLoading(false)
-			setNotification({message: "Something went wrong. Most probably a server error.", color: "red"}) //Reykjavik consistently errors out
+			setNotification({message: "Something went wrong. Most probably a server error.", color: "red"}) //Reykjavik consistently errors 500
 			setTimeout(() => { //show notification for 3 sec, then redirect back
 				setNotification({message: "", color: ""})
 				history.push("/")
@@ -33,7 +33,7 @@ const WeatherView = ({setFilterQuery, setLocations,setIsLoading, setNotification
 	return (
 		<div className="WeatherView">
 			<div className="weather__header">
-				<Link to="/" onClick={()=>{setFilterQuery("");setLocations([])}}> {/*go to main page and reset*/}
+				<Link to="/" onClick={()=>{setFilterQuery("");setLocations([])}} style={{marginRight:"20px"}}> {/*go to main page and reset state*/}
 					<img src="Media/left-arrow.svg" alt="back" className="clickableIcon"/>
 				</Link>
 				<h1>{(weather && weather.title)}</h1>
@@ -45,7 +45,7 @@ const WeatherView = ({setFilterQuery, setLocations,setIsLoading, setNotification
 					const nameOfDay = weekDays[dayNum]
 
 					return (
-						<div className="dayCard" key={i}> {/*card each day*/}
+						<div className="dayCard" key={i}> {/*card for each day*/}
 							<div className="card__attribute">
 								<h3 style={{borderBottom:"1px solid gray"}}>{nameOfDay}</h3>
 							</div>

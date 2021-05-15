@@ -6,6 +6,7 @@
 
 *{margin:0px;padding:0px;}
 
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -26,7 +27,7 @@ body {
 	justify-self:center;
 	align-self:center;
 	width:98vw;
-	padding:10px;
+	padding-top:10px;
 	height:8vh;
 	justify-content:center;
 	align-items:center;
@@ -100,6 +101,24 @@ body {
 	margin:10px;
 }
 
+.LocationCard h1{
+	position: relative;
+}
+
+.LocationCard h1:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  border-bottom: 2px solid #f28226;
+  transition: 0.4s;
+}
+
+.LocationCard h1:hover:after {
+  width: 100%;
+}
+
 .LocationCard:hover{
 	box-shadow: 0px 0px 2px 1px gray;
 }
@@ -140,8 +159,8 @@ body {
 
 .weather__header{
 	margin-bottom: 20px;
-	align-items: center;
 	display: flex;
+	align-items: center;
 	justify-content: center;
 	width: 100%
 }

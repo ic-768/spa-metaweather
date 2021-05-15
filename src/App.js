@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react"
-import { Route, Link} from "react-router-dom"
+import { Route} from "react-router-dom"
 import {PropagateLoader} from "react-spinners"
+import {getLocations} from "./api_calls"
 import WeatherView from "./WeatherView"
 import Notification from "./Notification"
-import {getLocations} from "./api_calls"
+import LocationList from "./LocationList"
 import './App.css';
 
 function App() {
@@ -14,46 +15,39 @@ function App() {
 	const backgroundImage = "Media/city.jpg"
 
 	useEffect(() => {
-		(async () => { //filtering function
+		(async () => {  //self-invoking anon. function for setting state from api call
 			filterQuery && setLocations(await getLocations(filterQuery))
 		})()
-	}, [filterQuery])
+	}, [filterQuery])//filterQuery is search input
 
 	return (
 		<div className="App" style={{backgroundImage: `url(${backgroundImage})`}} >
 			<div className="pageContainer">
-				
-				{/*If set, show notification or spinning animation */}
-				{notification.message && Notification({message:notification.message, color:notification.color})}
-				<PropagateLoader loading={isLoading} color="white" css="top:30px;position:absolute" />
 
-				<Route path="/:id">
-					<WeatherView setFilterQuery={setFilterQuery} region={locations[0]} setLocations={setLocations}setIsLoading={setIsLoading} setNotification={setNotification} />
-				</Route>
+				{/*if notification state is set, render component*/}
+				{notification.message && Notification({message: notification.message, color: notification.color})}
+
+				{/*if api call in progress, isLoading will be true and render component*/}
+				<PropagateLoader loading={isLoading} color="white" css="top:30px;position:absolute" />  
 
 				<Route exact path="/">
 					<div className="Banner">
-
-<div className="searchBar">
-	<img className="searchImage" src="Media/search.svg"/>
-						<input className="searchBar__input" type="text" value={filterQuery} placeholder="Search location..." 
-							onChange={(e) => {setFilterQuery(e.target.value)}} />
-</div>
-					</div>
-					{locations && locations.length > 0 && // many locations
-						<div className="LocationList">
-							{locations.map((location, i) =>
-								<Link key={location.woeid} to={`/${location.woeid}`} className="locationLink">
-									<div className="LocationCard" key={`${location.title}${i}`} onClick={() => {setLocations([location])}}>
-										<h1 style={{textDecoration:"none"}}>
-											{location.title}
-										</h1>
-									</div>
-								</Link>
-							)}
+						<div className="searchBar">
+							<img className="searchImage" src="Media/search.svg" alt="" />
+							<input className="searchBar__input" type="text" value={filterQuery} placeholder="Search for a location..."
+								onChange={(e) => {setFilterQuery(e.target.value)}} /> {/*filter locations (trigger useEffect)*/}
 						</div>
-					}
+					</div>
+
+					{locations && locations.length > 0 && // if locations
+					<LocationList locations={locations}/> }
 				</Route>
+
+				<Route path="/:id"> {/*a location has been selected*/}
+					<WeatherView setFilterQuery={setFilterQuery} setLocations={setLocations} 
+						setIsLoading={setIsLoading} setNotification={setNotification} />
+				</Route>
+
 			</div>
 		</div>
 	);
