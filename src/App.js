@@ -1,17 +1,16 @@
 import React, {useState, useEffect} from "react"
-import {getLocations} from "./api_calls"
 import { Route, Link} from "react-router-dom"
+import {PropagateLoader} from "react-spinners"
 import WeatherView from "./WeatherView"
 import Notification from "./Notification"
-import {PropagateLoader} from "react-spinners"
+import {getLocations} from "./api_calls"
 import './App.css';
 
 function App() {
 	const [filterQuery, setFilterQuery] = useState("")
 	const [notification, setNotification] = useState({message:"",color:""}) //shown if api call goes wrong
-	const [locations, setLocations] = useState([])
+	const [locations, setLocations] = useState([]) //list of locations received from api
 	const [isLoading, setIsLoading] = useState(false) //to show spinning animation during api call
-
 	const backgroundImage = "Media/city.jpg"
 
 	useEffect(() => {
@@ -29,17 +28,22 @@ function App() {
 				<PropagateLoader loading={isLoading} color="white" css="top:30px;position:absolute" />
 
 				<Route path="/:id">
-					<WeatherView setFilterQuery={setFilterQuery} region={locations[0]} setIsLoading={setIsLoading} setNotification={setNotification} />
+					<WeatherView setFilterQuery={setFilterQuery} region={locations[0]} setLocations={setLocations}setIsLoading={setIsLoading} setNotification={setNotification} />
 				</Route>
 
 				<Route exact path="/">
 					<div className="Banner">
-						<input className="searchBar" value={filterQuery} placeholder="Search by location" onChange={(e) => {setFilterQuery(e.target.value)}} />
+
+<div className="searchBar">
+	<img className="searchImage" src="Media/search.svg"/>
+						<input className="searchBar__input" type="text" value={filterQuery} placeholder="Search location..." 
+							onChange={(e) => {setFilterQuery(e.target.value)}} />
+</div>
 					</div>
 					{locations && locations.length > 0 && // many locations
 						<div className="LocationList">
 							{locations.map((location, i) =>
-								<Link key={location.woeid} to={`/${location.woeid}`} style={{ textDecoration: 'none',color:"black" }}>
+								<Link key={location.woeid} to={`/${location.woeid}`} className="locationLink">
 									<div className="LocationCard" key={`${location.title}${i}`} onClick={() => {setLocations([location])}}>
 										<h1 style={{textDecoration:"none"}}>
 											{location.title}

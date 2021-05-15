@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap'); 
-@keyframes fadeIn {   0%   {opacity: 0%;}   100% {opacity: 100%;} }
+@keyframes fadeIn {   
+	0%   {opacity: 0%;}   
+	100% {opacity: 100%;} 
+}
 
 *{margin:0px;padding:0px;}
 
@@ -23,19 +26,39 @@ body {
 	justify-self:center;
 	align-self:center;
 	width:98vw;
+	padding:10px;
 	height:8vh;
 	justify-content:center;
 	align-items:center;
 }
 
 .searchBar{
+	display:flex;
+	align-items:center;
 	height:60%;
 	width:40%;
-	border-radius:20px;
 	padding:2px;
+	border-radius:20px;
+	background-color:white;
+}
+.searchImage{
 	padding-left:10px;
+	height:20px;
 }
 
+.searchBar__input{
+	border-radius:20px;
+	width:100%;
+	flex-grow:1;
+	padding-left:10px;
+	height:100%;
+	border:none;
+}
+
+.searchBar__input:focus{
+	outline:none;
+
+}
 .pageContainer{
 	flex-grow:1;
 	height:100vh;
@@ -45,6 +68,9 @@ body {
 }
 
 .LocationList{
+	display:flex;
+	align-items:center;
+	justify-content:center;
 	background-color:white;
 	box-shadow: 0px 0px 2px 1px black;
 	border-radius:20px;
@@ -52,12 +78,19 @@ body {
 	overflow-y:auto;
 	margin-left:auto;
 	margin-right:auto;
-	width:80vw;
+	max-width:80vw;
+	min-width:50vw;
+	flex-wrap:wrap;
+}
+
+.locationLink{
+  text-decoration: none;
+	color:black;
 	display:flex;
 	align-items:center;
 	justify-content:center;
-	flex-wrap:wrap;
 }
+
 
 .LocationCard{
 	cursor:pointer;
@@ -105,6 +138,14 @@ body {
 	justify-content:center;
 }
 
+.weather__header{
+	margin-bottom: 20px;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	width: 100%
+}
+
 .card__attribute{
 	align-items:center;
 	justify-content:center;
@@ -136,6 +177,7 @@ body {
 .clickableIcon{
 	cursor:pointer;
 	margin-right:10px;
+	height:20px;
 }
 
 .Notification{ 	
@@ -155,3 +197,58 @@ body {
 .Notification__text{ 	
 	color:black; 
 } 
+
+.attribute__image.small{
+	height: 22px;
+}
+
+.attribute__image.large{
+	height: 28px;
+}
+
+.attribute__image.humidity{
+	margin-left: 7px;
+}
+
+@media screen and (max-width: 579px) { 
+.searchBar{
+	height:90%;
+	width:70%;
+	border-radius:20px;
+	padding:2px;
+	padding-left:10px;
+}
+
+	.locationLink{
+		height:40%;
+		width:40%;
+	}
+
+	.LocationCard{
+		padding:5px;
+		height:90%;
+		width:90%;
+	}
+
+	.LocationCard h1{
+		width:100%;
+		font-size:12px;
+		text-align:center;
+		text-justify:center;
+	}
+
+	.imageContainer{
+		margin-bottom:2px;
+
+	}
+	.attribute__image.small{
+		height: 16px;
+	}
+
+	.attribute__image.large{
+		height: 18px;
+	}
+	.attribute__image.humidity{
+		margin-left: 4px;
+	}
+}

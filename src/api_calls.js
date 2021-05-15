@@ -6,16 +6,16 @@ export const getLocations = async (query) => {
 		return response.data
 	}
 	catch{
-		throw ("Something went wrong while fetching locations")
+		throw Error("Something went wrong while fetching locations")
 	}
 }
 
 export const getWeather = async (id) => {
 	try {
 		const response = await axios.get(`/api/location/${id}/`)  //! taking away that trailing slash causes a CORS
-		return response.data.consolidated_weather
+		return response.data
 	}
 	catch{
-		throw ("Something went wrong while fetching weather")
+		throw Error("Something went wrong while fetching weather")
 	}
 }
